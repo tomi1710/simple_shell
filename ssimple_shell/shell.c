@@ -59,9 +59,9 @@ char* input(void)
 
 /**
  * main - PID
- *
+ * aaa
  * Return: Always 0.
-5 */
+ */
 int mypid(void)
 {
 	pid_t my_pid;
