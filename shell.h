@@ -9,10 +9,12 @@
 #include <sys/wait.h>
 #include <string.h>
 
+extern char **environ;
 char **_getinput(char *input, size_t size);
 char *_strcpy(char *dest, const char *src);
 char *_strcon(char *dest, char *src);
 int _strcmp(char *src1, char *src2);
 int _strlen(char *str);
+char *checkexec(char *file);
 
 #endif /* SHELL_H */

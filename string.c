@@ -30,17 +30,20 @@ char *_strcpy(char *dest, const char *src)
 
 char *_strcon(char *dest, char *src)
 {
-	int a, b;
-
+	int a, b, size;
+	char *buff;
+	size = (_strlen(dest)) + (_strlen(src));
+	buff = malloc(sizeof(char) * size + 1);
 	for (a = 0; dest[a] != '\0'; a++)
 	{
+		buff[a] = dest[a];
 	}
 	for (b = 0; src[b] != '\0'; b++)
 	{
-		dest[a + b] = src[b];
+		buff[a + b] = src[b];
 	}
-	dest[a + b] = src[a];
-	return (dest);
+	buff[a + b] = '\0';
+	return (buff);
 }
 
 /**

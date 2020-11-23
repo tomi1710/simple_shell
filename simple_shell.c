@@ -34,6 +34,7 @@ int main(void)
 				printf("%s\n", tokens[a]);
 				a++;
 			}
+			tokens[0] = checkexec(tokens[0]);
 			printf("execute\n");
 			if (execve(tokens[0], tokens, NULL) == -1)
 			{
@@ -44,7 +45,6 @@ int main(void)
 					free(tokens[a]);
 				}
 				free(tokens);
-				exit(98);
 			}
 		}
 		else
@@ -99,31 +99,43 @@ char **_getinput(char *input, size_t size)
 
 char *checkexec(char *file)
 {
-        extern char **environ;
-        char *buff, PATH = "PATH";
-        int a = 0, b, c;
+	char *buff, *buff2, PATH[] = "PATH";
+	int a = 0, b;
+	struct stat st;
 
-        if (stat(file) == 0)
-        {
-                return (file);
-        }
-        while (environ[a] != NULL)                                                                                              {
-                buff = malloc(sizeof(char) * 20);
-                while (environ[a][b] != '=')
-                {
-                        buff[b] = environ[a][b];
-                }
-                if (_strcmp(buff, PATH) == 0)
-                {
-                        break;
-                }
-                free(buff);
-        }
-        strtok(buff, "=");
-        a = 0;
-        PATH = strtok(NULL, ":");
-        opendir(PATH);
-        while (PATH != NULL)
+	if (stat(file, &st) == 0)
+		return (file);
+	file = _strcon("/", file);
+	while (environ[a] != NULL)
 	{
+		buff = malloc(sizeof(char) * 20);
+		for (b = 0; environ[a][b] != '='; b++)
+			buff[b] = environ[a][b];
+		if (_strcmp(buff, PATH) == 0)
+		{
+			free(buff);
+			break;
+		}
+		free(buff);
+		a++;
 	}
+	b = _strlen(environ[a]);
+	buff = malloc(sizeof(char) * b);
+	_strcpy(buff, environ[a]);
+	strtok(buff, "=");
+	buff2 = strtok(NULL, ":");
+	while (buff2 != NULL)
+	{
+		buff2 = _strcon(buff2, file);
+		if (stat(buff2, &st) == 0)
+		{
+			free(file), free(buff);
+			return (buff2);
+		}
+		free(buff2);
+		buff2 = strtok(NULL, ":");
+	}
+	write(2, "No executable found", 20);
+	free(file), free(buff);
+	return (NULL);
 }
