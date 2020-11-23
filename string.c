@@ -32,6 +32,7 @@ char *_strcon(char *dest, char *src)
 {
 	int a, b, size;
 	char *buff;
+
 	size = (_strlen(dest)) + (_strlen(src));
 	buff = malloc(sizeof(char) * size + 1);
 	for (a = 0; dest[a] != '\0'; a++)
@@ -57,6 +58,7 @@ char *_strcon(char *dest, char *src)
 int _strcmp(char *str1, char *str2)
 {
 	int a = 0;
+
 	for (; str1[a] == str2[a] && str1[a] != '\0' && str2[a] != '\0'; a++)
 	{
 	}

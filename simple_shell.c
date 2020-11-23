@@ -14,9 +14,8 @@ int main(void)
 	pid_t child;
 	char **tokens;
 
-	while (1 < 2)
+	while (1)
 	{
-		printf("Fork\n");
 		child = fork();
 		if (child == -1)
 		{
@@ -27,23 +26,16 @@ int main(void)
 		{
 			write(1, "$ ", 2);
 			getline(&input, &n, stdin);
-			printf("Getinput %s %lu\n", input, n);
 			tokens = _getinput(input, n);
 			while (tokens[a] != NULL)
-			{
-				printf("%s\n", tokens[a]);
 				a++;
-			}
 			tokens[0] = checkexec(tokens[0]);
-			printf("execute\n");
 			if (execve(tokens[0], tokens, NULL) == -1)
 			{
-				printf("Error executing\n");
+				write(2, "Error executing\n", 16);
 				a = 0;
 				while (tokens[a] != NULL)
-				{
 					free(tokens[a]);
-				}
 				free(tokens);
 			}
 		}
@@ -51,6 +43,8 @@ int main(void)
 		{
 			wait(&status);
 			free(input);
+			if (status != 0)
+				exit(99);
 		}
 	}
 	return (0);
@@ -67,26 +61,36 @@ int main(void)
 char **_getinput(char *input, size_t size)
 {
 	char **tokens;
-	int a = 0, b;
-	char *buff;
+	int a = 0, b, len;
+	char *buff, nl = '\n';
 
-	printf("Open input\n");
 	tokens = malloc(sizeof(char) * size);
 	buff = strtok(input, " \n");
+	if (_strcmp(buff, "exit") == 0)
+	{
+		free(tokens);
+		free(input);
+		exit(98);
+	}
+	if (_strcmp(buff, "env") == 0)
+	{
+		for(b = 0; environ[b] != NULL; b++)
+		{
+			len = _strlen(environ[b]);
+			write(1, environ[b], len);
+			write(1, &nl, 1);
+		}
+	}
 	while (buff != NULL)
 	{
-		printf("Enter loop\n");
 		b = _strlen(buff);
-		printf("b = %d\n", b);
 		tokens[a] = malloc(sizeof(char) * b);
 		_strcpy(tokens[a], buff);
-		printf("token[%d] = %s\n", a, tokens[a]);
 		buff = NULL;
 		buff = strtok(NULL, " \n");
 		a++;
 	}
 	tokens[a] = NULL;
-	printf("Exit loop\n");
 	return (tokens);
 }
 
