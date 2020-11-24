@@ -9,7 +9,7 @@ This repository contains the following files:
 | -------------- | --------------------- |
 | simple_shell.c | main function |
 | shell.h | header file |
-| string.c | functions to work with strings, concatenate, etc. |
+| string.c | functions to work with strings, concatenate, etc |
 | AUTHORS | creators |
 | man_1_simple_shell | man page |
 
@@ -48,19 +48,18 @@ hsh$ pwd
 ## Commands
 |   **Command**   |   **Description**   |
 | -------------- | --------------------- |
-| ls [option] | List directory contents. |
-| pwd | List working directory. |
-| cd [PATH] | Change directory. |
-| cp | Copy Files. |
-| mv | Move files. |
-| Ctrl + C | The simple shell will be terminated. |
-| Ctrl + D | The simple shell will be terminated. |
+| ls [option] | List directory contents |
+| pwd | prints working directory |
+| cp | Copy Files |
+| mv | Move or rename files |
+| Ctrl + C | The simple shell will be terminated |
+| Ctrl + D | The simple shell will be terminated |
 
 ## Builtins
 |   **Command**   |   **Description**   |
 | -------------- | --------------------- |
-| env |  Run a program in a modified enviroment. |
-| exit | Cause normal process termination. |
+| env |  Run a program in a modified enviroment |
+| exit | Cause normal process termination |
 
 ## Authors
 Tomas de Castro
