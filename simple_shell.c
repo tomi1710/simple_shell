@@ -84,8 +84,8 @@ char **_getinput(char *input, size_t size)
 			len = _strlen(environ[b]);
 			write(1, environ[b], len);
 			write(1, &nl, 1);
-			exit(99);
 		}
+		exit(99);
 	}
 	while (buff != NULL)
 	{
