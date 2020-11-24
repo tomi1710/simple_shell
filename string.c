@@ -33,8 +33,8 @@ char *_strcon(char *dest, char *src)
 	int a, b, size;
 	char *buff;
 
-	size = (_strlen(dest)) + (_strlen(src));
-	buff = malloc(sizeof(char) * size + 1);
+	size = (_strlen(dest)) + (_strlen(src)) + 1;
+	buff = malloc(sizeof(char) * size);
 	for (a = 0; dest[a] != '\0'; a++)
 	{
 		buff[a] = dest[a];

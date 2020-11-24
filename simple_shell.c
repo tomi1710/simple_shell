@@ -33,19 +33,19 @@ int main(void)
 			while (tokens[a] != NULL)
 				a++;
 			tokens[0] = checkexec(tokens[0]);
+			free(input);
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
 				perror("");
-				a = 0;
-				while (tokens[a] != NULL)
+				for (; a >= 0; a--)
 					free(tokens[a]);
 				free(tokens);
+				exit(99);
 			}
 		}
 		else
 		{
 			wait(&status);
-			free(input);
 			if (status == 25088)
 				exit(99);
 		}
@@ -77,11 +77,14 @@ char **_getinput(char *input, size_t size)
 	}
 	if (_strcmp(buff, "env") == 0)
 	{
+		free(input);
+		free(tokens);
 		for(b = 0; environ[b] != NULL; b++)
 		{
 			len = _strlen(environ[b]);
 			write(1, environ[b], len);
 			write(1, &nl, 1);
+			exit(99);
 		}
 	}
 	while (buff != NULL)
@@ -93,7 +96,6 @@ char **_getinput(char *input, size_t size)
 		buff = strtok(NULL, " \n");
 		a++;
 	}
-	tokens[a] = NULL;
 	return (tokens);
 }
 
@@ -106,13 +108,13 @@ char **_getinput(char *input, size_t size)
 
 char *checkexec(char *file)
 {
-	char *buff, *buff2, PATH[] = "PATH";
+	char *buff, *buff2, *buff3, PATH[] = "PATH";
 	int a = 0, b;
 	struct stat st;
 
 	if (stat(file, &st) == 0)
 		return (file);
-	file = _strcon("/", file);
+	buff3 = _strcon("/", file);
 	while (environ[a] != NULL)
 	{
 		buff = malloc(sizeof(char) * 20);
@@ -133,16 +135,16 @@ char *checkexec(char *file)
 	buff2 = strtok(NULL, ":");
 	while (buff2 != NULL)
 	{
-		buff2 = _strcon(buff2, file);
+		buff2 = _strcon(buff2, buff3);
 		if (stat(buff2, &st) == 0)
 		{
-			free(file), free(buff);
+			free(file), free(buff), free(buff3);
 			return (buff2);
 		}
 		free(buff2);
 		buff2 = strtok(NULL, ":");
 	}
 	write(2, "No executable found", 20);
-	free(file), free(buff);
+	free(file), free(buff), free(buff3);
 	return (NULL);
 }
