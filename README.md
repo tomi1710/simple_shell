@@ -13,6 +13,7 @@ This repository contains the following files:
 | AUTHORS | creators |
 | man_1_simple_shell | man page |
 
+
 # To utilize this shell, follow the next steps:
 
 ## Clone the repository
