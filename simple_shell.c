@@ -19,20 +19,23 @@ int main(void)
 		child = fork();
 		if (child == -1)
 		{
-			write(2, "Error", 6);
+			perror("");
 			exit(98);
 		}
 		if (child == 0)
 		{
-			write(1, "$ ", 2);
+			if (isatty(1) == 1)
+			{
+				write(1, "$ ", 2);
+			}
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
 			while (tokens[a] != NULL)
 				a++;
 			tokens[0] = checkexec(tokens[0]);
-			if (execve(tokens[0], tokens, NULL) == -1)
+			if (execve(tokens[0], tokens, environ) == -1)
 			{
-				write(2, "Error executing\n", 16);
+				perror("");
 				a = 0;
 				while (tokens[a] != NULL)
 					free(tokens[a]);
@@ -43,7 +46,7 @@ int main(void)
 		{
 			wait(&status);
 			free(input);
-			if (status != 0)
+			if (status == 25088)
 				exit(99);
 		}
 	}
