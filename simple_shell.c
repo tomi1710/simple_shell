@@ -60,7 +60,7 @@ char **_getinput(char *input, size_t size)
 {
 	char **tokens;
 	int a = 0, b, len;
-	char *buff, *buffenv;
+	char *buff;
 
 	tokens = malloc(sizeof(char) * size);
 	buff = strtok(input, " \n");
@@ -78,15 +78,10 @@ char **_getinput(char *input, size_t size)
 		for (b = 0; environ[b] != NULL; b++)
 		{
 			len = _strlen(environ[b]);
-			buffenv = malloc(sizeof(char) * len + 1);
-			for (a = 0; environ[b][a] != '\0'; a++)
-				buffenv[a] = environ[b][a];
-			buffenv[a] = '\n';
-			write(1, buffenv, len + 1);
-			free(buffenv);
+			write(1, environ[b], len);
+			write(1, "\n", 1);
 		}
-		exit(99);
-		perror("");
+		return (0);
 	}
 	while (buff != NULL)
 	{
