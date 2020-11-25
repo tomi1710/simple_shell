@@ -42,7 +42,7 @@ int main(void)
 		{
 			wait(&status);
 			if (status == 25088)
-				exit(0);
+				return (0);
 		}
 	}
 	return (0);
@@ -81,7 +81,7 @@ char **_getinput(char *input, size_t size)
 			write(1, environ[b], len);
 			write(1, "\n", 1);
 		}
-		return (0);
+		exit(99);
 	}
 	while (buff != NULL)
 	{

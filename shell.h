@@ -17,6 +17,5 @@ char *_strcon(char *dest, char *src);
 int _strcmp(char *src1, char *src2);
 int _strlen(char *str);
 char *checkexec(char *file);
-void freetokens(char **tokens, int a);
 
 #endif /* SHELL_H */
