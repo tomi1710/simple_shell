@@ -47,7 +47,11 @@ int main(void)
 	}
 	return (0);
 }
-
+/**
+ * freetokens - frees the bidimensional array tokens
+ * @tokens: array to be freed
+ * @a: length of thearray
+ */
 void freetokens(char **tokens, int a)
 {
 	for (; a >= 0; a--)
