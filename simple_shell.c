@@ -69,6 +69,7 @@ char **_getinput(char *input, size_t size)
 		free(tokens);
 		free(input);
 		exit(98);
+		perror("");
 	}
 	if (_strcmp(buff, "env") == 0)
 	{
@@ -81,6 +82,7 @@ char **_getinput(char *input, size_t size)
 			write(1, &nl, 1);
 		}
 		exit(99);
+		perror("");
 	}
 	while (buff != NULL)
 	{
