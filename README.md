@@ -21,7 +21,7 @@ This repository contains the following files:
 This way you will have all the files necessary.
 
 ```
-$ git clone https://github.com/ChloeDumit/simple_shell
+$ git clone https://github.com/tomi1710/simple_shell
 ```
 
 ## Compile it and start
@@ -62,5 +62,4 @@ hsh$ pwd
 | exit | Cause normal process termination |
 
 ## Authors
-Tomas de Castro
-Gabriel Prochnau
+Tomas de Castro & Gabriel Prochnau.
