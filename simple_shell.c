@@ -19,7 +19,7 @@ int main(void)
 		if (child == -1)
 		{
 			perror("");
-			exit(0);
+			exit(98);
 		}
 		if (child == 0)
 		{
