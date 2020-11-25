@@ -34,8 +34,6 @@ int main(void)
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
 				perror("");
-				for (; a >= 0; a--)
-					free(tokens[a]);
 				free(tokens);
 				exit(99);
 			}
@@ -49,17 +47,7 @@ int main(void)
 	}
 	return (0);
 }
-/*
- * freetokens - frees the bidimensional array tokens
- * @tokens: array to be freed
- * @a: length of thearray
- *
-void freetokens(char **tokens, int a)
-{
-	for (; a >= 0; a--)
-		free(tokens[a]);
-	free(tokens);
-	}*/
+
 /**
  * _getinput - separes the imput in tokens
  *
