@@ -39,6 +39,10 @@ int fenv(void)
 	int a, b, c;
 	char *buff;
 
+	if (environ[0] == NULL)
+	{
+		write(1, "\n", 1);
+	}
 	for (a = 0; environ[a] != NULL; a++)
 	{
 		b = _strlen(environ[a]);
