@@ -7,11 +7,10 @@
  */
 int main(void)
 {
-	char *input = NULL;
-	int status, a = 0;
+	char *input = NULL, **tokens;
+	int status, a = 0, ex;
 	size_t n;
 	pid_t child;
-	char **tokens;
 
 	while (1)
 	{
@@ -42,10 +41,12 @@ int main(void)
 		{
 			wait(&status);
 			if (status == 25088)
-				break;
+				exit(ex);
 		}
+		if (WIFEXITED(status))
+			ex = WEXITSTATUS(status);
 	}
-	return (errno);
+	return (0);
 }
 
 /**
