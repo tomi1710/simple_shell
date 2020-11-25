@@ -5,7 +5,6 @@
  *
  * Return: Always 0
  */
-
 int main(void)
 {
 	char *input = NULL;
@@ -25,9 +24,7 @@ int main(void)
 		if (child == 0)
 		{
 			if (isatty(1) == 1)
-			{
 				write(1, "$ ", 2);
-			}
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
 			while (tokens[a] != NULL)
@@ -37,9 +34,7 @@ int main(void)
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
 				perror("");
-				for (; a >= 0; a--)
-					free(tokens[a]);
-				free(tokens);
+				freetokens(tokens, a);
 				exit(99);
 			}
 		}
@@ -53,6 +48,12 @@ int main(void)
 	return (0);
 }
 
+void freetokens(char **tokens, int a)
+{
+	for (; a >= 0; a--)
+		free(tokens[a]);
+	free(tokens);
+}
 /**
  * _getinput - separes the imput in tokens
  *
@@ -79,7 +80,7 @@ char **_getinput(char *input, size_t size)
 	{
 		free(input);
 		free(tokens);
-		for(b = 0; environ[b] != NULL; b++)
+		for (b = 0; environ[b] != NULL; b++)
 		{
 			len = _strlen(environ[b]);
 			write(1, environ[b], len);
