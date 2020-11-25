@@ -8,7 +8,7 @@
 int main(void)
 {
 	char *input = NULL, **tokens;
-	int status, a = 0, ex;
+	int status, a = 0, ex, error;
 	size_t n;
 	pid_t child;
 
@@ -22,8 +22,7 @@ int main(void)
 		}
 		if (child == 0)
 		{
-			if (isatty(1) == 1)
-				write(1, "$ ", 2);
+			write(1, "$ ", 2);
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
 			while (tokens[a] != NULL)
@@ -32,15 +31,16 @@ int main(void)
 			free(input);
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
+				error = errno;
 				perror("");
 				free(tokens);
-				exit(99);
+				exit(error);
 			}
 		}
 		else
 		{
 			wait(&status);
-			if (status == 25088)
+			if (WEXITSTATUS(status) == 98 || isatty(1))
 				return (ex);
 		}
 		if (WIFEXITED(status))
