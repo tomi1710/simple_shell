@@ -42,7 +42,7 @@ int main(void)
 		{
 			wait(&status);
 			if (status == 25088)
-				exit(99);
+				exit(0);
 		}
 	}
 	return (0);
