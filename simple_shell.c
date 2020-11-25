@@ -41,7 +41,7 @@ int main(void)
 		{
 			wait(&status);
 			if (status == 25088)
-				exit(ex);
+				return (ex);
 		}
 		if (WIFEXITED(status))
 			ex = WEXITSTATUS(status);
