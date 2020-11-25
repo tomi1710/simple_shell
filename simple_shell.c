@@ -59,29 +59,21 @@ int main(void)
 char **_getinput(char *input, size_t size)
 {
 	char **tokens;
-	int a = 0, b, len;
+	int a = 0, b;
 	char *buff;
 
 	tokens = malloc(sizeof(char) * size);
 	buff = strtok(input, " \n");
-	if (_strcmp(buff, "exit") == 0)
+	b = checkbin(input, tokens);
+	if (b == 0)
 	{
-		free(tokens);
-		free(input);
-		exit(98);
+		exit(99);
 		perror("");
 	}
-	if (_strcmp(buff, "env") == 0)
+	if (b == 1)
 	{
-		free(input);
-		free(tokens);
-		for (b = 0; environ[b] != NULL; b++)
-		{
-			len = _strlen(environ[b]);
-			write(1, environ[b], len);
-			write(1, "\n", 1);
-		}
-		exit(99);
+		exit(98);
+		perror("");
 	}
 	while (buff != NULL)
 	{
