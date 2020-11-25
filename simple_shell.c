@@ -19,7 +19,7 @@ int main(void)
 		if (child == -1)
 		{
 			perror("");
-			exit(98);
+			exit(99);
 		}
 		if (child == 0)
 		{
@@ -42,10 +42,10 @@ int main(void)
 		{
 			wait(&status);
 			if (status == 25088)
-				return (2);
+				break;
 		}
 	}
-	return (0);
+	return (errno);
 }
 
 /**

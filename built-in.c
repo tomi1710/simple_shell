@@ -36,13 +36,21 @@ int checkbin(char *input, char **tokens)
 
 int fenv(void)
 {
-	int a, b;
+	int a, b, c;
+	char *buff;
 
 	for (a = 0; environ[a] != NULL; a++)
 	{
 		b = _strlen(environ[a]);
-		write(1, environ[a], b);
+		buff = malloc((sizeof(char) * b) + 1);
+		for (c = 0; environ[a][c] != '\0'; c++)
+		{
+			buff[c] = environ[a][c];
+		}
+		buff[c] = '\0';
+		write(1, buff, b + 1);
 		write(1, "\n", 1);
+		free(buff);
 	}
 	return (0);
 }
