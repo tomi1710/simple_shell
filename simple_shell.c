@@ -47,7 +47,7 @@ int main(void)
 		{
 			wait(&status);
 			if (status == 25088)
-				exit(99);
+				exit(0);
 		}
 	}
 	return (0);
@@ -144,7 +144,6 @@ char *checkexec(char *file)
 		free(buff2);
 		buff2 = strtok(NULL, ":");
 	}
-	write(2, "No executable found", 20);
 	free(file), free(buff), free(buff3);
 	return (NULL);
 }
