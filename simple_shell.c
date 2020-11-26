@@ -8,10 +8,11 @@
 int main(void)
 {
 	char *input = NULL, **tokens;
-	int status, a = 0, ex;
+	int status, ex, tty = 1;
 	size_t n;
 	pid_t child;
 
+	tty = isatty(0);
 	while (1)
 	{
 		child = fork();
@@ -22,11 +23,10 @@ int main(void)
 		}
 		if (child == 0)
 		{
-			write(1, "$ ", 2);
+			if (isatty(0))
+				write(1, "($) ", 4);
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
-			while (tokens[a] != NULL)
-				a++;
 			tokens[0] = checkexec(tokens[0]);
 			free(input);
 			if (execve(tokens[0], tokens, environ) == -1)
@@ -39,7 +39,7 @@ int main(void)
 		else
 		{
 			wait(&status);
-			if (WEXITSTATUS(status) == 98)
+			if (tty == 0 || WEXITSTATUS(status) == 98)
 				return (ex);
 		}
 		if (WIFEXITED(status))
