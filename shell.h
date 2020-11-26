@@ -17,7 +17,7 @@ char *_strcpy(char *dest, const char *src);
 char *_strcon(char *dest, char *src);
 int _strcmp(char *src1, char *src2);
 int _strlen(char *str);
-char *checkexec(char *file);
+char *checkexec(char **file);
 int checkbin(char *input, char **tokens);
 int fexit(void);
 int fenv(void);

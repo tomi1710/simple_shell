@@ -27,8 +27,9 @@ int main(void)
 				write(1, "$ ", 3);
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
-			tokens[0] = checkexec(tokens[0]);
 			free(input);
+			tokens[0] = checkexec(tokens);
+			tokens = _realloc(tokens);
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
 				perror("");
@@ -39,6 +40,7 @@ int main(void)
 		else
 		{
 			wait(&status);
+			free(input);
 			if (tty == 0 || WEXITSTATUS(status) == 98)
 				return (ex);
 		}
@@ -99,15 +101,15 @@ char **_getinput(char *input, size_t size)
  * Return: directory of the file
  */
 
-char *checkexec(char *file)
+char *checkexec(char **file)
 {
 	char *buff = NULL, *buff2 = NULL, *buff3 = NULL, PATH[] = "PATH";
 	int a = 0, b = 0, test = 0;
 	struct stat st;
 
-	if (stat(file, &st) == 0)
-		return (file);
-	buff3 = _strcon("/", file);
+	if (stat(file[0], &st) == 0)
+		return (file[0]);
+	buff3 = _strcon("/", file[0]);
 	while (environ[a] != NULL)
 	{
 		for (b = 0; environ[a][b] != '='; b++)
@@ -143,6 +145,6 @@ char *checkexec(char *file)
 		buff2 = strtok(NULL, ":");
 	}
 	perror("");
-	free(file), free(buff), free(buff3), exit(127);
+	free(file[0]), free(file), free(buff), free(buff3), exit(127);
 	return (NULL);
 }
