@@ -8,14 +8,15 @@
 int main(void)
 {
 	char *input = NULL, **tokens = NULL;
-	int status, ex, tty = 1;
-	size_t n;
+	int status = 0, ex = 0, tty = 1;
+	size_t n = 0;
 	pid_t child;
 
 	tty = isatty(0);
 	while (1)
 	{
 		child = fork();
+		ex = WEXITSTATUS(status);
 		if (child == -1)
 		{
 			perror("");
@@ -43,8 +44,6 @@ int main(void)
 			if (tty == 0 || WEXITSTATUS(status) == 98)
 				return (ex);
 		}
-		if (WIFEXITED(status))
-			ex = WEXITSTATUS(status);
 	}
 	return (0);
 }
