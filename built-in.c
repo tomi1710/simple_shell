@@ -42,8 +42,8 @@ int fenv(void)
 	for (a = 0; environ[a] != NULL; a++)
 	{
 		b = _strlen(environ[a]);
-		write(1, environ[a], b);
-		write(1, "\n", 1);
+		write(1, environ[a], b + 1);
+		write(1, "\n", 2);
 	}
 	return (0);
 }

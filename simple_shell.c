@@ -24,7 +24,7 @@ int main(void)
 		if (child == 0)
 		{
 			if (isatty(0))
-				write(1, "($) ", 4);
+				write(1, "$ ", 3);
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
 			tokens[0] = checkexec(tokens[0]);
@@ -78,7 +78,7 @@ char **_getinput(char *input, size_t size)
 	while (buff != NULL)
 	{
 		b = _strlen(buff);
-		tokens[a] = malloc(sizeof(char) * b);
+		tokens[a] = malloc(sizeof(char) * b + 1);
 		_strcpy(tokens[a], buff);
 		buff = NULL;
 		buff = strtok(NULL, " \n");
@@ -96,8 +96,8 @@ char **_getinput(char *input, size_t size)
 
 char *checkexec(char *file)
 {
-	char *buff, *buff2, *buff3, PATH[] = "PATH";
-	int a = 0, b, test;
+	char *buff = NULL, *buff2 = NULL, *buff3 = NULL, PATH[] = "PATH";
+	int a = 0, b = 0, test = 0;
 	struct stat st;
 
 	if (stat(file, &st) == 0)
@@ -117,7 +117,7 @@ char *checkexec(char *file)
 		a++;
 	}
 	b = _strlen(environ[a]);
-	buff = malloc(sizeof(char) * b);
+	buff = malloc(sizeof(char) * b + 1);
 	_strcpy(buff, environ[a]);
 	strtok(buff, "=");
 	buff2 = strtok(NULL, ":");
@@ -134,7 +134,6 @@ char *checkexec(char *file)
 		buff2 = strtok(NULL, ":");
 	}
 	perror("");
-	exit(127);
-	free(file), free(buff), free(buff3);
+	free(file), free(buff), free(buff3), exit(127);
 	return (NULL);
 }
