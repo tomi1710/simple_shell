@@ -8,7 +8,7 @@
 int main(void)
 {
 	char *input = NULL, **tokens;
-	int status, a = 0, ex, error;
+	int status, a = 0, ex;
 	size_t n;
 	pid_t child;
 
@@ -18,7 +18,7 @@ int main(void)
 		if (child == -1)
 		{
 			perror("");
-			exit(99);
+			exit(errno);
 		}
 		if (child == 0)
 		{
@@ -31,16 +31,15 @@ int main(void)
 			free(input);
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
-				error = errno;
 				perror("");
 				free(tokens);
-				exit(error);
+				exit(errno);
 			}
 		}
 		else
 		{
 			wait(&status);
-			if (WEXITSTATUS(status) == 98 || isatty(1))
+			if (WEXITSTATUS(status) == 98)
 				return (ex);
 		}
 		if (WIFEXITED(status))
@@ -98,7 +97,7 @@ char **_getinput(char *input, size_t size)
 char *checkexec(char *file)
 {
 	char *buff, *buff2, *buff3, PATH[] = "PATH";
-	int a = 0, b;
+	int a = 0, b, test;
 	struct stat st;
 
 	if (stat(file, &st) == 0)
@@ -125,7 +124,8 @@ char *checkexec(char *file)
 	while (buff2 != NULL)
 	{
 		buff2 = _strcon(buff2, buff3);
-		if (stat(buff2, &st) == 0)
+		test = stat(buff2, &st);
+		if (test == 0)
 		{
 			free(file), free(buff), free(buff3);
 			return (buff2);
@@ -133,6 +133,8 @@ char *checkexec(char *file)
 		free(buff2);
 		buff2 = strtok(NULL, ":");
 	}
+	perror("");
+	exit(127);
 	free(file), free(buff), free(buff3);
 	return (NULL);
 }
