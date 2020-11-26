@@ -28,7 +28,6 @@ int main(void)
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
 			tokens[0] = checkexec(tokens[0]);
-			tokens = _realloc(tokens);
 			free(input);
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
@@ -64,6 +63,11 @@ char **_getinput(char *input, size_t size)
 	char *buff;
 
 	tokens = malloc(sizeof(char) * size);
+	if (tokens == NULL)
+	{
+		perror("");
+		exit(errno);
+	}
 	buff = strtok(input, " \n");
 	b = checkbin(input, tokens);
 	if (b == 0)
