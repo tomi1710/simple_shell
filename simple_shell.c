@@ -26,10 +26,9 @@ int main(void)
 			if (isatty(0))
 				write(1, "$ ", 3);
 			getline(&input, &n, stdin);
-			tokens = _getinput(input, n);
+			tokens = _getinput(input);
 			free(input);
 			tokens[0] = checkexec(tokens);
-			tokens = _realloc(tokens);
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
 				perror("");
@@ -54,22 +53,28 @@ int main(void)
  * _getinput - separes the imput in tokens
  *
  * @input: input
- * @size: size of the input
  * Return: pointer to array of strings
  */
 
-char **_getinput(char *input, size_t size)
+char **_getinput(char *input)
 {
 	char **tokens;
-	int a = 0, b;
-	char *buff;
+	int a = 0, b, i, size = 1;
+	char *buff, *buff2;
 
-	tokens = malloc(sizeof(char) * size);
+	buff2 = _strcon("", input);
+	strtok(buff2, " \n");
+	while (strtok(NULL, " \n") != NULL)
+		size++;
+	free(buff2);
+	tokens = malloc(sizeof(char *) * (size + 1));
 	if (tokens == NULL)
 	{
 		perror("");
 		exit(errno);
 	}
+	for (i = 0; i < size; i++)
+		tokens[i] = NULL;
 	buff = strtok(input, " \n");
 	b = checkbin(input, tokens);
 	if (b == 0)
@@ -91,6 +96,7 @@ char **_getinput(char *input, size_t size)
 		buff = strtok(NULL, " \n");
 		a++;
 	}
+	tokens[a] = NULL;
 	return (tokens);
 }
 
@@ -110,11 +116,11 @@ char *checkexec(char **file)
 	if (stat(file[0], &st) == 0)
 		return (file[0]);
 	buff3 = _strcon("/", file[0]);
-	while (environ[a] != NULL)
+	for (a = 0; environ[a] != NULL; a++)
 	{
 		for (b = 0; environ[a][b] != '='; b++)
-			{
-			}
+		{
+		}
 		buff = malloc(sizeof(char) * b + 1);
 		for (b = 0; environ[a][b] != '='; b++)
 			buff[b] = environ[a][b];
@@ -125,10 +131,8 @@ char *checkexec(char **file)
 			break;
 		}
 		free(buff);
-		a++;
 	}
-	b = _strlen(environ[a]);
-	buff = malloc(sizeof(char) * b + 1);
+	buff = malloc(sizeof(char) * (_strlen(environ[a]) + 1));
 	_strcpy(buff, environ[a]);
 	strtok(buff, "=");
 	buff2 = strtok(NULL, ":");
@@ -138,13 +142,11 @@ char *checkexec(char **file)
 		test = stat(buff2, &st);
 		if (test == 0)
 		{
-			free(file), free(buff), free(buff3);
+			free(file[0]), free(buff), free(buff3);
 			return (buff2);
 		}
 		free(buff2);
 		buff2 = strtok(NULL, ":");
 	}
-	perror("");
 	free(file[0]), free(file), free(buff), free(buff3), exit(127);
-	return (NULL);
 }

@@ -11,8 +11,7 @@
 #include <errno.h>
 
 extern char **environ;
-char **_realloc(char **tokens);
-char **_getinput(char *input, size_t size);
+char **_getinput(char *input);
 char *_strcpy(char *dest, const char *src);
 char *_strcon(char *dest, char *src);
 int _strcmp(char *src1, char *src2);
