@@ -4,6 +4,7 @@
  * checkbin - checks if the input is a built in and executes it
  *
  * @input: input
+ * @tokens: tokens
  * Return: 0 if succed, -1 if built in doesn´t exist
  */
 

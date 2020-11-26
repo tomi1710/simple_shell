@@ -7,7 +7,7 @@
  */
 int main(void)
 {
-	char *input = NULL, **tokens;
+	char *input = NULL, **tokens = NULL;
 	int status, ex, tty = 1;
 	size_t n;
 	pid_t child;
@@ -28,6 +28,7 @@ int main(void)
 			getline(&input, &n, stdin);
 			tokens = _getinput(input, n);
 			tokens[0] = checkexec(tokens[0]);
+			tokens = _realloc(tokens);
 			free(input);
 			if (execve(tokens[0], tokens, environ) == -1)
 			{
@@ -105,9 +106,13 @@ char *checkexec(char *file)
 	buff3 = _strcon("/", file);
 	while (environ[a] != NULL)
 	{
-		buff = malloc(sizeof(char) * 20);
+		for (b = 0; environ[a][b] != '='; b++)
+			{
+			}
+		buff = malloc(sizeof(char) * b + 1);
 		for (b = 0; environ[a][b] != '='; b++)
 			buff[b] = environ[a][b];
+		buff[b] = '\0';
 		if (_strcmp(buff, PATH) == 0)
 		{
 			free(buff);

@@ -57,10 +57,14 @@ char *_strcon(char *dest, char *src)
 
 int _strcmp(char *str1, char *str2)
 {
-	int a = 0;
+	int a;
 
-	for (; str1[a] == str2[a] && str1[a] != '\0' && str2[a] != '\0'; a++)
+	for (a = 0; str1[a] != '\0' && str2[a] != '\0'; a++)
 	{
+		if (str1[a] != str2[a])
+		{
+			break;
+		}
 	}
 	return (str1[a] - str2[a]);
 }
