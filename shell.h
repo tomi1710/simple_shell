@@ -11,6 +11,7 @@
 #include <errno.h>
 
 extern char **environ;
+int _check_tokens(char *input);
 char **_getinput(char *input);
 char *_strcpy(char *dest, const char *src);
 char *_strcon(char *dest, char *src);

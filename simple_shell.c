@@ -16,7 +16,6 @@ int main(void)
 	while (1)
 	{
 		child = fork();
-		ex = WEXITSTATUS(status);
 		if (child == -1)
 		{
 			perror("");
@@ -37,8 +36,9 @@ int main(void)
 				exit(errno);
 			}
 		}
-		else
+		if (child > 0)
 		{
+			ex = WEXITSTATUS(status);
 			wait(&status);
 			free(input);
 			if (tty == 0 || WEXITSTATUS(status) == 98)
@@ -58,15 +58,11 @@ int main(void)
 char **_getinput(char *input)
 {
 	char **tokens;
-	int a = 0, b, i, size = 1;
-	char *buff, *buff2;
+	int a = 0, b, i, size = 0;
+	char *buff;
 
-	buff2 = _strcon("", input);
-	strtok(buff2, " \n");
-	while (strtok(NULL, " \n") != NULL)
-		size++;
-	free(buff2);
-	tokens = malloc(sizeof(char *) * (size + 1));
+	size = _check_tokens(input);
+	tokens = malloc(sizeof(char *) * size);
 	if (tokens == NULL)
 	{
 		perror("");
@@ -148,4 +144,34 @@ char *checkexec(char **file)
 		buff2 = strtok(NULL, ":");
 	}
 	free(file[0]), free(file), free(buff), free(buff3), exit(127);
+}
+
+/**
+ * _check_tokens - check the ammount of tokens
+ *
+ * @input: input
+ * Return: ammount of tokens
+ */
+
+int _check_tokens(char *input)
+{
+	char *buff2;
+	int size = 0;
+
+	buff2 = _strcon("", input);
+	if (strtok(buff2, " \n") != NULL)
+	{
+		size++;
+	}
+	while (strtok(NULL, " \n") != NULL)
+		size++;
+	free(buff2);
+	if (size == 0)
+	{
+		free(input);
+		exit(97);
+	}
+	else
+		size++;
+	return (size);
 }
