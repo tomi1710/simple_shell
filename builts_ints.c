@@ -60,6 +60,8 @@ int fcd(char **args, char **env, char *buffer)
 {
 	char *path = "HOME=";
 	char *tmp = NULL;
+	char *newdir = NULL;
+	char *newdir1 = NULL;
 	int i, j, k;
 
 	for (i = 0; env[i] != NULL; i++)
@@ -76,7 +78,7 @@ int fcd(char **args, char **env, char *buffer)
 	}
 	tmp = malloc(_strlen(env[i]) - 4);
 	if (tmp == NULL)
-		perror("");
+		exit(98);
 	for (k = 0, j = 5; env[i][j] != '\0'; j++, k++)
 		tmp[k] = 'a';
 	for (k = 0, j = 5; env[i][j] != '\0'; j++, k++)
@@ -85,18 +87,23 @@ int fcd(char **args, char **env, char *buffer)
 
 	if (args[1])
 	{
-		tmp = str_concat(tmp, "/");
-		tmp = str_concat(tmp, args[1]);
-		if (chdir(tmp) != 0)
+		newdir = str_concat(tmp, "/");
+		free(tmp);
+		newdir1 = str_concat(newdir, args[1]);
+		free(newdir);
+		if (chdir(newdir1) != 0)
+		{
 			perror("");
+		}
+		free(newdir1);
 	}
 	else
 	{
 		if (chdir(tmp) != 0)
 			perror("");
+		free(tmp);
 	}
 	free(buffer);
 	free(args);
-	free(tmp);
 	return (0);
 }
