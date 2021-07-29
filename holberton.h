@@ -47,6 +47,7 @@ int _strncmp(char *s1, char *s2, int len);
 void print_error(char *str, char *error);
 int dir_check(char *dir_name);
 char *spaces(char *buffer);
-void modify_pwd(char **env, char *tmp);
+char *look_env(char *path, char **env);
+void _chdir(char *dir);
 
 #endif
