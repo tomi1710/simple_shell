@@ -95,12 +95,16 @@ int fcd(char **args, char **env, char *buffer)
 		{
 			perror("");
 		}
+		else
+			setenv("PWD", newdir1, 1);
 		free(newdir1);
 	}
 	else
 	{
 		if (chdir(tmp) != 0)
 			perror("");
+		else
+			setenv("PWD", tmp, 1);
 		free(tmp);
 	}
 	free(buffer);
