@@ -63,6 +63,9 @@ int fcd(char **args, char **env, char *buffer)
 {
 	char *tmp = NULL, *oldpwd = NULL;
 	char *newdir = NULL, *newdir1 = NULL;
+	char my_cwdd[1024];
+
+	getcwd(my_cwdd, 1024);
 
 	tmp = look_env("HOME=", env);
 
@@ -80,7 +83,10 @@ int fcd(char **args, char **env, char *buffer)
 	{
 		oldpwd = look_env("OLDPWD=", env);
 		printf("%s\n", oldpwd);
-		_chdir(oldpwd);
+		if (oldpwd[0] == '\0')
+			_chdir(my_cwdd);
+		else
+			_chdir(oldpwd);
 		free(tmp);
 		free(oldpwd);
 	}
