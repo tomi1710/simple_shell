@@ -77,7 +77,7 @@ int fcd(char **args, char **env, char *buffer)
 	{
 		_chdir(args[1]);
 	}
-	else if (args[1] && args[1][0] == '-')
+	else if (args[1] && args[1][0] == '-' && args[0][1] != '-')
 	{
 		oldpwd = look_env("OLDPWD=", env);
 		printf("%s\n", oldpwd);
