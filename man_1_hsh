@@ -1,0 +1,71 @@
+.TH hsh 1 "27 July 2021" "2.0" "simple_shell man page"
+.SH NAME
+.B simple_shell v2
+- simple command interpreter.
+.SH SYNOPSIS
+.B Start shell:
+.P
+.B "./hsh"
+.P
+.P
+.SH DESCRIPTION
+simple_shell is, as the name, a simple command line interpreter, that provides a command line user interface
+meaning that it reads lines from either file or terminal (standard input), interprets them, and executes commands. The first Unix
+shell was the Thompson shell, sh, written by Ken Thompson. simple_shell will check if the first argument passed to it is a built-in function (ls, cd, pwd, etc).
+If it fails, it will check whether is a built-in script, if not then it will check the PATH for the executable file. And only when it finds it, will execute the command.
+.P
+.SH OVERVIEW
+simple_shell interprets and executes commands that the same simple_shell reads from the standard input or files.
+.P
+.SH INVOCATION
+First of, you need to compile simple_shell with the exery \".c\" file in your current directory, using the specified
+flags. Use the wildcard '*' to get all your \".c\" files.
+.P
+.RS
+.B <3 gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+.P
+.RE
+simple_shell can run in interactive mode by typing "./hsh" on the command line, and then hit "Enter". When the
+prompt "<3" appears you are in interactive mode, meaning you can type your commands followed by "Enter". Type:
+.P
+.RS
+.B <3 ./hsh
+.P
+.RE
+Also, simple_shell works in non-interactive mode with shell scripts.
+.P
+.RS
+.B echo 'pwd' | ./hsh
+.P
+.SH BUILTINS
+Here, we list the built-in commands from the simple_shell program. They are built-in because they are needed to
+perform an operation that can not be performed by another separate process. These are buit-in for efficiecy.
+.P
+.B cd
+.P
+--- Switch to HOME directory.
+.P
+.B cd ..
+.P
+--- Moves up one directory.
+.P
+.B cd [directory]
+.P
+--- Switch to specified directory.
+.P
+.B exit
+.P
+--- Terminate the shell process.
+.P
+.B env
+.P
+--- Prints all environment variables.
+.P
+.SH SEE ALSO
+sh(1) man page.
+
+.SH BUGS
+No bugs.
+
+.SH AUTHOR
+Facundo Diaz and Tomas de Castro - Holberton School - Cohort #13.
