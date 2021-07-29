@@ -89,17 +89,14 @@ int fcd(char **args, char **env, char *buffer)
 		tmp = str_concat(tmp, args[1]);
 		if (chdir(tmp) != 0)
 			perror("");
-		free(tmp);
 	}
 	else
 	{
 		if (chdir(tmp) != 0)
-		{
-			free(tmp);
 			perror("");
-		}
 	}
 	free(buffer);
 	free(args);
+	free(tmp);
 	return (0);
 }
