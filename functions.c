@@ -145,7 +145,6 @@ void execute_5(char *path, char **args, char **env)
 			{
 				if (execve(path, args, env) == -1)
 				{
-					print_error(path, "No such file or directory");
 					free(path);
 					exit(0);
 				}
