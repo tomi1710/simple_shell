@@ -156,7 +156,7 @@ void _chdir(char *dir)
 	setenv("OLDPWD", my_cwd, 1);
 
 	if (chdir(dir) != 0)
-		write(STDOUT_FILENO, "./hsh: 1: cd: can't cd to /hbtn\n", 32);
+		fprintf(stderr, "./hsh: 1: cd: can't cd to /hbtn\n");
 	else
 	{
 		getcwd(my_cwd, 1024);
