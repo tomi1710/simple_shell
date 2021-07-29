@@ -72,12 +72,10 @@ int fcd(char **args, char **env, char *buffer)
 	if (args[1] && args[1][0] == '.' && args[1][1] == '.')
 	{
 		_chdir(tmp);
-		free(tmp);
 	}
 	else if (args[1] && args[1][0] == '/')
 	{
 		_chdir(args[1]);
-		free(tmp);
 	}
 	else if (args[1] && args[1][0] == '-')
 	{
@@ -87,13 +85,11 @@ int fcd(char **args, char **env, char *buffer)
 			_chdir(my_cwdd);
 		else
 			_chdir(oldpwd);
-		free(tmp);
 		free(oldpwd);
 	}
 	else if (args[1])
 	{
 		newdir = str_concat(tmp, "/");
-		free(tmp);
 		newdir1 = str_concat(newdir, args[1]);
 		free(newdir);
 		_chdir(newdir1);
@@ -108,9 +104,9 @@ int fcd(char **args, char **env, char *buffer)
 		}
 		else
 			_chdir(tmp);
-		free(tmp);
 	}
 
+	free(tmp);
 	free(buffer);
 	free(args);
 	return (0);
@@ -139,7 +135,7 @@ char *look_env(char *path, char **env)
 			break;
 	}
 
-	tmp = malloc(_strlen(env[i]) - 4);
+	tmp = malloc(_strlen(env[i]));
 	if (tmp == NULL)
 		exit(98);
 
