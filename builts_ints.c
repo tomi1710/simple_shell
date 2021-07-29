@@ -71,6 +71,11 @@ int fcd(char **args, char **env, char *buffer)
 		_chdir(tmp);
 		free(tmp);
 	}
+	else if (args[1] && args[1][0] == '/')
+	{
+		_chdir(args[1]);
+		free(tmp);
+	}
 	else if (args[1] && args[1][0] == '-')
 	{
 		oldpwd = look_env("OLDPWD=", env);
