@@ -134,6 +134,8 @@ char *look_env(char *path, char **env)
 		if (j == _strlen(path))
 			break;
 	}
+	if (env[i][j] == '\0')
+		return (NULL);
 
 	tmp = malloc(_strlen(env[i]) + 10);
 	if (tmp == NULL)
