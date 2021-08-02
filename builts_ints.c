@@ -135,7 +135,7 @@ char *look_env(char *path, char **env)
 			break;
 	}
 
-	tmp = malloc(_strlen(env[i]) + 100);
+	tmp = malloc(_strlen(env[i]) + 10);
 	if (tmp == NULL)
 		exit(98);
 
