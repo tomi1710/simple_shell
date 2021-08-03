@@ -68,8 +68,9 @@ int fcd(char **args, char **env, char *buffer)
 	getcwd(my_cwdd, 1024);
 
 	tmp = look_env("HOME=", env);
-
-	if (args[1] && args[1][0] == '.' && args[1][1] == '.')
+	if (tmp == NULL)
+		_chdir(".");
+	else if (args[1] && args[1][0] == '.' && args[1][1] == '.')
 	{
 		_chdir(tmp);
 	}
