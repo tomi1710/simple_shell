@@ -83,10 +83,7 @@ int fcd(char **args, char **env, char *buffer)
 		if (oldpwd != NULL)
 		{
 			printf("%s\n", oldpwd);
-			if (oldpwd[0] == '\0')
-				_chdir(my_cwdd);
-			else
-				_chdir(oldpwd);
+			_chdir(oldpwd);
 		}
 		else
 		{
@@ -139,10 +136,11 @@ char *look_env(char *path, char **env)
 			flag = 1;
 		if (j == _strlen(path))
 		{
+			flag2++;
 			break;
-			flag++;
 		}
 	}
+
 	if (flag2 == 0)
 		return (NULL);
 	if (_strlen(env[i]) == _strlen(path))
