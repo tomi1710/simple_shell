@@ -122,7 +122,7 @@ int fcd(char **args, char **env, char *buffer)
 
 char *look_env(char *path, char **env)
 {
-	int i, j, k;
+	int i, j, k, flag2 = 0;
 	char *tmp = NULL;
 
 	for (i = 0; env[i] != NULL; i++)
@@ -136,12 +136,15 @@ char *look_env(char *path, char **env)
 		}
 
 		if (env[i][5] == '\0' && j == 5)
-		{
 			flag = 1;
-		}
 		if (j == _strlen(path))
+		{
 			break;
+			flag++;
+		}
 	}
+	if (flag2 == 0)
+		return (NULL);
 	if (_strlen(env[i]) == _strlen(path))
 		return (NULL);
 
