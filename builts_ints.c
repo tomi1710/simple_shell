@@ -89,7 +89,10 @@ int fcd(char **args, char **env, char *buffer)
 				_chdir(oldpwd);
 		}
 		else
+		{
+			_chdir(my_cwdd);
 			printf("%s\n", my_cwdd);
+		}
 		free(oldpwd);
 	}
 	else if (args[1])
