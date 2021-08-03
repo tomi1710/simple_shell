@@ -103,9 +103,7 @@ int fcd(char **args, char **env, char *buffer)
 	else
 	{
 		if (flag == 1)
-		{
-			chdir(".");
-		}
+			_chdir(".");
 		else
 			_chdir(tmp);
 	}
@@ -165,7 +163,12 @@ void _chdir(char *dir)
 	getcwd(my_cwd, 1024);
 	setenv("OLDPWD", my_cwd, 1);
 
-	if (chdir(dir) != 0)
+	if (dir[0] == '.')
+	{
+		setenv("HOME", my_cwd, 1);
+		setenv("PWD", my_cwd, 1);
+	}
+	else if (chdir(dir) != 0)
 		fprintf(stderr, "./hsh: 1: cd: can't cd to /hbtn\n");
 	else
 	{
