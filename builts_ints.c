@@ -88,6 +88,8 @@ int fcd(char **args, char **env, char *buffer)
 			else
 				_chdir(oldpwd);
 		}
+		else
+			printf("%s\n", my_cwdd);
 		free(oldpwd);
 	}
 	else if (args[1])
