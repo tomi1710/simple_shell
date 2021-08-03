@@ -80,11 +80,14 @@ int fcd(char **args, char **env, char *buffer)
 	else if (args[1] && args[1][0] == '-' && args[0][1] != '-')
 	{
 		oldpwd = look_env("OLDPWD=", env);
-		printf("%s\n", oldpwd);
-		if (oldpwd[0] == '\0')
-			_chdir(my_cwdd);
-		else
-			_chdir(oldpwd);
+		if (oldpwd != NULL)
+		{
+			printf("%s\n", oldpwd);
+			if (oldpwd[0] == '\0')
+				_chdir(my_cwdd);
+			else
+				_chdir(oldpwd);
+		}
 		free(oldpwd);
 	}
 	else if (args[1])
@@ -139,7 +142,7 @@ char *look_env(char *path, char **env)
 
 	tmp = malloc(_strlen(env[i]) + 10);
 	if (tmp == NULL)
-		exit(98);
+		return (NULL);
 
 	for (k = 0, j = _strlen(path); env[i][j] != '\0'; j++, k++)
 		tmp[k] = 'a';
