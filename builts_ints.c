@@ -104,8 +104,7 @@ int fcd(char **args, char **env, char *buffer)
 	{
 		if (flag == 1)
 		{
-			if (chdir(".") != 0)
-				perror("");
+			chdir(".");
 		}
 		else
 			_chdir(tmp);
