@@ -102,8 +102,6 @@ int fcd(char **args, char **env, char *buffer)
 	}
 	else
 	{
-		if (tmp == NULL)
-			_chdir("none");
 		if (flag == 1)
 		{
 			if (chdir(".") != 0)
