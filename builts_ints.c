@@ -150,7 +150,7 @@ char *look_env(char *path, char **env)
 		tmp[k] = 'a';
 	for (k = 0, j = _strlen(path); env[i][j] != '\0'; j++, k++)
 		tmp[k] = env[i][j];
-	tmp[k] = '\0'
+	tmp[k] = '\0';
 
 	return (tmp);
 }
