@@ -54,6 +54,8 @@ int fexit(char **args, char **env, char *buffer)
 	if (args[1])
 	{
 		a = atoi(args[1]);
+		free(buffer);
+		free(args);
 		exit(a);
 	}
 
