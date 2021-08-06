@@ -61,7 +61,7 @@ int fexit(char **args, char **env, char *buffer)
 
 	free(buffer);
 	free(args);
-	exit(0);
+	exit(2);
 }
 /**
 * fcd - command cd function
