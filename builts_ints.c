@@ -46,7 +46,16 @@ int find_built_in_3(char **args, char **env, char *buffer)
 */
 int fexit(char **args, char **env, char *buffer)
 {
+	int a;
+
+	(void)a;
 	(void)env;
+
+	if (args[1])
+	{
+		a = atoi(args[1]);
+		exit(a);
+	}
 
 	free(buffer);
 	free(args);
